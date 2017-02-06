@@ -12,5 +12,7 @@ onJVM :: FunctionalLang -> Bool
 onJVM Frege = true
 onJVM Haskell = false
 
+someCalculations n1 n2 n3 = (n1+n2)^n3 - n2+n1 
+
 main args = do
     println (concatString "Hello " "World!" )
