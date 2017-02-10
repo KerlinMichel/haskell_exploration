@@ -16,18 +16,10 @@ line =
 
 keyValue :: GenParser Char st [String]
 keyValue =
-  do first <- keyValueContent
-     next <- value
-     return (first : next)
-
-keyValueContent :: GenParser Char st String
-keyValueContent =
-  many (noneOf "=\n")
-
-value :: GenParser Char st [String]
-value =
-  (char '=' >> keyValue)
-  <|> (return [])
+  do key <- many (letter)
+     char '='
+     value <- many (letter)
+     return [key, value]
 
 eol :: GenParser Char st Char
 eol = char '\n'
@@ -36,4 +28,4 @@ parseKeyValue :: String -> Either ParseError [[String]]
 parseKeyValue input = parse keyValueFile "Parse Error" input
 
 main =
-  do print $ parseKeyValue "HELLO=World!\n"
+  do print $ parseKeyValue "HELLO=World\nLANG=HASKELL\n"
